@@ -1,5 +1,11 @@
-#variable "aws_key_path" {}
-#variable "aws_key_name" {}
+variable "aws_key_path" {
+    description = "Path to EC2 Key"
+    default = "~/aws"
+}
+variable "aws_key_name" {
+    description = "EC2 Key Pair Name"
+    default = "bosh"
+}
 
 variable "aws_region" {
     description = "EC2 Region for the VPC"
