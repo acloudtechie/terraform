@@ -1,3 +1,4 @@
+
 provider "aws" {
     region = "${var.aws_region}"
 }
@@ -85,5 +86,21 @@ subnet_id: ${module.vpc.public_subnets[0]}
 external_ip: ${aws_eip.one.public_ip}
 default_security_groups: [${aws_security_group.bosh.id}]
     EOF
-    filename = "${var.var_export_file}"
+    filename = "${var.bosh_workspace_root_dir}/aws-vars.yml"
 }
+
+/*
+resource "null_resource" "boshcreatenv" {
+  provisioner "local-exec" {
+    command = "./bosh-aws.sh start  ${var.bosh_workspace_root_dir}"
+  }
+  depends_on = ["local_file.awsvars", "module.vpc"]
+  provisioner "local-exec" {
+    command = "./bosh-aws.sh stop  ${var.bosh_workspace_root_dir}"
+  }
+  provisioner "local-exec" {
+    when = "destroy"
+    command = "rm ${var.bosh_workspace_root_dir}/deployments/aws/*"
+  }
+}
+*/

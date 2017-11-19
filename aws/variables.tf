@@ -49,7 +49,7 @@ variable "private_subnets" {
     default = ["10.0.101.0/24"]
 }
 
-variable "var_export_file" {
+variable "bosh_workspace_root_dir" {
     description = "Directory to export AWS Variables"
-    default = "/Users/mzhang/bosh/aws-vars.yml"
+    default = "/tmp/bosh"
 }
