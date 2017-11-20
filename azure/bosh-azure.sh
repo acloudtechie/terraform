@@ -42,12 +42,24 @@ else
     			-v client_id=${ARM_CLIENT_ID} \
     			-v client_secret=${ARM_CLIENT_SECRET}
 
+			echo "Azure Bosh environment created successfully."
 			bosh alias-env azure -e <(bosh int $BOSH_WORKSPACE_ROOT_DIR/azure-vars.yml --path /external_ip) --ca-cert <(bosh int $BOSH_DEPLOYMENT_DIR/creds.yml --path /director_ssl/ca)
-			export BOSH_CLIENT=admin
-			export BOSH_CLIENT_SECRET=`bosh int $BOSH_DEPLOYMENT_DIR/creds.yml --path /admin_password`
-			bosh -e azure env
-			bosh -e azure login
-			#sudo route add -net 10.244.0.0/16     192.168.50.6 
+            echo "Azure Bosh environment alias 'aws' created successfully."
+			#bosh -e azure env
+			#export BOSH_ENVIRONMENT=azure
+            #export BOSH_DEPLOYMENT=zookeeper
+            #sudo route add -net 10.244.0.0/16     192.168.50.6 
+			
+			echo "For a brand new bosh env created, run the following commands to login the environment:"
+			echo "$ export BOSH_CLIENT=admin"
+			echo "$ export BOSH_CLIENT_SECRET=\`bosh int `echo $BOSH_DEPLOYMENT_DIR`/creds.yml --path /admin_password\`"
+			echo "$ bosh -e azure login"  	
+			
+            echo "Run the following commands to aws cloud-config:"
+			echo "$ bosh -e azure update-cloud-config  `echo $BOSH_WORKSPACE_ROOT_DIR`/azure/cloud-config.yml --vars-file `echo $BOSH_WORKSPACE_ROOT_DIR`/azure-vars.yml"
+    	    echo "Run the following commands to upload stemcell:"
+			echo "$ bosh -e aws upload-stemcell  https://bosh.io/d/stemcells/bosh-azure-hyperv-ubuntu-trusty-go_agent"
+			echo "Bosh Azure environment should be ready once above commands are executed successfully."
     	;;
  		 "stop")
 		    #bosh -e azure clean-up --all

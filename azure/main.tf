@@ -51,7 +51,7 @@ resource "azurerm_network_security_group" "boshnsg" {
       protocol                   = "Tcp"
       source_port_range          = "*"
       destination_port_range     = "22"
-      source_address_prefix      = "*"
+      source_address_prefix      = "Internet"
       destination_address_prefix = "*"
     }
 
@@ -118,6 +118,20 @@ resource "azurerm_storage_account" "boshstore" {
                environment = "${var.environment}"
                costcenter  = "${var.cost_center}"
             }
+}
+
+resource "azurerm_storage_container" "bosh" {
+  name                  = "bosh"
+  resource_group_name   = "${azurerm_resource_group.boshresgroup.name}"
+  storage_account_name  = "${azurerm_storage_account.boshstore.name}"
+  container_access_type = "private"
+}
+
+resource "azurerm_storage_container" "stemcell" {
+  name                  = "stemcell"
+  resource_group_name   = "${azurerm_resource_group.boshresgroup.name}"
+  storage_account_name  = "${azurerm_storage_account.boshstore.name}"
+  container_access_type = "blob"
 }
 
 resource "local_file" "azurevars" {
