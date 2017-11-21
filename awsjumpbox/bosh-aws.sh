@@ -33,7 +33,6 @@ else
   		"start")
 			bosh create-env $BOSH_DEPLOYMENT_RS_DIR/bosh.yml \
     			-o $BOSH_DEPLOYMENT_RS_DIR/aws/cpi.yml \
-    			-o $BOSH_DEPLOYMENT_RS_DIR/external-ip-with-registry-not-recommended.yml \
     			--state $BOSH_DEPLOYMENT_DIR/state.json \
     			--vars-store $BOSH_DEPLOYMENT_DIR/creds.yml \
     			--var-file private_key=$AWS_PRIVATE_KEY_PATH \

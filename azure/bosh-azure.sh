@@ -56,7 +56,7 @@ else
 			echo "$ bosh -e azure login"  	
 			
             echo "Run the following commands to aws cloud-config:"
-			echo "$ bosh -e azure update-cloud-config  `echo $BOSH_WORKSPACE_ROOT_DIR`/azure/cloud-config.yml --vars-file `echo $BOSH_WORKSPACE_ROOT_DIR`/azure-vars.yml"
+			echo "$ bosh -e azure update-cloud-config  `echo $BOSH_DEPLOYMENT_RS_DIR`/azure/cloud-config.yml --vars-file `echo $BOSH_WORKSPACE_ROOT_DIR`/azure-vars.yml"
     	    echo "Run the following commands to upload stemcell:"
 			echo "$ bosh -e aws upload-stemcell  https://bosh.io/d/stemcells/bosh-azure-hyperv-ubuntu-trusty-go_agent"
 			echo "Bosh Azure environment should be ready once above commands are executed successfully."
