@@ -35,18 +35,11 @@ else
     			-o $BOSH_DEPLOYMENT_RS_DIR/aws/cpi.yml \
     			--state $BOSH_DEPLOYMENT_DIR/state.json \
     			--vars-store $BOSH_DEPLOYMENT_DIR/creds.yml \
-    			--var-file private_key=$AWS_PRIVATE_KEY_PATH \
-    			--vars-file  $BOSH_WORKSPACE_ROOT_DIR/aws-vars.yml \
-    			-v access_key_id=${AWS_ACCESS_KEY_ID} \
-    			-v secret_access_key=${AWS_SECRET_ACCESS_KEY}
+    			--vars-file  aws-vars.yml
 			
 			echo "AWS Bosh environment created successfully."
-			bosh alias-env aws -e `bosh int $BOSH_WORKSPACE_ROOT_DIR/aws-vars.yml --path /external_ip` --ca-cert <(bosh int $BOSH_DEPLOYMENT_DIR/creds.yml --path /director_ssl/ca)
+			bosh alias-env aws -e `bosh int aws-vars.yml --path /internal_ip` --ca-cert <(bosh int $BOSH_DEPLOYMENT_DIR/creds.yml --path /director_ssl/ca)
             echo "AWS Bosh environment alias 'aws' created successfully."
-			#bosh -e aws env
-			#export BOSH_ENVIRONMENT=aws
-            #export BOSH_DEPLOYMENT=zookeeper
-			#sudo route add -net 10.244.0.0/16     192.168.50.6
 
 			echo "For a brand new bosh env created, run the following commands to login the environment:"
 			echo "$ export BOSH_CLIENT=admin"
@@ -54,7 +47,7 @@ else
 			echo "$ bosh -e aws login"  	
 			 
             echo "Run the following commands to aws cloud-config:"
-			echo "$ bosh -e aws update-cloud-config  `echo $BOSH_DEPLOYMENT_RS_DIR`/aws/cloud-config.yml --vars-file `echo $BOSH_WORKSPACE_ROOT_DIR`/aws-vars.yml"
+			echo "$ bosh -e aws update-cloud-config  `echo $BOSH_DEPLOYMENT_RS_DIR`/aws/cloud-config.yml --vars-file aws-vars.yml"
     	    echo "Run the following commands to upload stemcell:"
 			echo "$ bosh -e aws upload-stemcell  https://bosh.io/d/stemcells/bosh-aws-xen-hvm-ubuntu-trusty-go_agent"
 			echo "Bosh AWS environment should be ready once above commands are executed successfully."
@@ -63,13 +56,9 @@ else
 		    #bosh -e aws clean-up --all
 			bosh delete-env $BOSH_DEPLOYMENT_RS_DIR/bosh.yml \
     			-o $BOSH_DEPLOYMENT_RS_DIR/aws/cpi.yml \
-    			-o $BOSH_DEPLOYMENT_RS_DIR/external-ip-with-registry-not-recommended.yml \
     			--state $BOSH_DEPLOYMENT_DIR/state.json \
     			--vars-store $BOSH_DEPLOYMENT_DIR/creds.yml \
-    			--var-file private_key=$AWS_PRIVATE_KEY_PATH \
-    			--vars-file  $BOSH_WORKSPACE_ROOT_DIR/aws-vars.yml \
-    			-v access_key_id=${AWS_ACCESS_KEY_ID} \
-    			-v secret_access_key=${AWS_SECRET_ACCESS_KEY}
+    			--vars-file  aws-vars.yml
     	;;
 
   	*)

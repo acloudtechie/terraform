@@ -27,12 +27,12 @@ output "eip" {
   value       = ["${aws_eip.director.public_ip}"]
 }
 
-/*
-output "bastion_eip" {
-  description = "Elastic Public IP for Bastion servers"
-  value       = ["${aws_eip.bastion.public_ip}"]
+
+output "bastion_ips" {
+  description = "Public IPs for Bastion servers"
+  value       = ["${aws_instance.bastion.*.public_ip}"]
 }
-*/
+
 
 # Security Group
 output "bosh_sg" {

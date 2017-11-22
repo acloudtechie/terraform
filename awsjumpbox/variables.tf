@@ -1,6 +1,6 @@
-variable "aws_key_path" {
+variable "aws_bastion_key_path" {
     description = "Path to EC2 Key"
-    default = "~/aws"
+    default = "~/.ssh/aws_bastion"
 }
 variable "bosh_key_name" {
     description = "EC2 Key Pair Name for Bosh director"
@@ -63,4 +63,9 @@ variable "private_subnets" {
 variable "environment" {
     description = "Environment tag"
     default = "dev"
+}
+
+variable "bosh_aws_vars_file_path" {
+    description = "Path to exported AWS Variables file"
+    default = "/tmp/bosh/aws-vars.yml"
 }

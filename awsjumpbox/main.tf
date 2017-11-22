@@ -72,35 +72,3 @@ resource "aws_security_group" "bosh" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-
-resource "local_file" "awsvars" {
-    content = <<EOF
-director_name: bosh-aws
-internal_cidr: ${var.private_subnets[0]}
-internal_gw: ${cidrhost(var.private_subnets[0], 1)}
-internal_ip: ${cidrhost(var.private_subnets[0], 7)}
-region: ${var.aws_region}
-az: ${var.azs[0]}
-default_key_name: ${var.bosh_key_name}
-subnet_id: ${module.vpc.private_subnets[0]}
-#external_ip: ${aws_eip.director.public_ip}
-default_security_groups: [${aws_security_group.bosh.id}]
-    EOF
-    filename = "/tmp/aws-vars.yml"
-}
-
-/*
-resource "null_resource" "boshcreatenv" {
-  provisioner "local-exec" {
-    command = "./bosh-aws.sh start  ${var.bosh_workspace_root_dir}"
-  }
-  depends_on = ["local_file.awsvars", "module.vpc"]
-  provisioner "local-exec" {
-    command = "./bosh-aws.sh stop  ${var.bosh_workspace_root_dir}"
-  }
-  provisioner "local-exec" {
-    when = "destroy"
-    command = "rm ${var.bosh_workspace_root_dir}/deployments/aws/*"
-  }
-}
-*/
