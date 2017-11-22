@@ -69,3 +69,8 @@ variable "bosh_aws_vars_file_path" {
     description = "Path to exported AWS Variables file"
     default = "/tmp/bosh/aws-vars.yml"
 }
+
+variable "provisioner_ssh_user" {
+    description = "ssh user for provisioner connection"
+    default = "ec2-user"
+}

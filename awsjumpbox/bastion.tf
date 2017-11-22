@@ -107,7 +107,7 @@ resource "aws_instance" "bastion" {
         destination = "bosh-aws.sh"
         connection {
           type     = "ssh"
-          user     = "ec2-user"
+          user     = "${var.provisioner_ssh_user}"
           private_key = "${file(var.aws_bastion_key_path)}"
         }
     }
@@ -116,7 +116,7 @@ resource "aws_instance" "bastion" {
         destination = "aws-vars.yml"
         connection {
           type     = "ssh"
-          user     = "ec2-user"
+          user     = "${var.provisioner_ssh_user}"
           private_key = "${file(var.aws_bastion_key_path)}"
         }
     }
@@ -126,7 +126,7 @@ resource "aws_instance" "bastion" {
         ]
         connection {
           type     = "ssh"
-          user     = "ec2-user"
+          user     = "${var.provisioner_ssh_user}"
           private_key = "${file(var.aws_bastion_key_path)}"
         }
     }
